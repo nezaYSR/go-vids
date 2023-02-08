@@ -18,9 +18,6 @@ Godeps/
 # gobuild files
 gobuild/
 
-# Automatic generated go files
-*.go
-
 # Object files and directories
 *.o
 *.a
