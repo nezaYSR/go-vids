@@ -1,0 +1,47 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories
+vendor/
+Godeps/
+
+# gobuild files
+gobuild/
+
+# Automatic generated go files
+*.go
+
+# Object files and directories
+*.o
+*.a
+*.pic.o
+*.race.o
+
+# Build directory
+build/
+
+# Build tags
+# By default, Go build tags are used to include or exclude files based on the environment
+# Build tags should be placed in a line, just like build constraints
+# http://golang.org/pkg/go/build/
+
+# Release archive files
+*.gz
+*.tar.gz
+*.zip
+
+# System files and directories
+*.DS_Store
+.DS_Store
+
+.env
