@@ -3,7 +3,6 @@ package main
 import (
 	"io"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -28,6 +27,8 @@ func main() {
 	setupLogOutput()
 
 	server := gin.New()
+	server.Static("/css", "./template/css")
+	server.LoadHTMLGlob("templates/*.html")
 
 	server.Use(
 		gin.Recovery(),
@@ -36,36 +37,39 @@ func main() {
 		gindump.Dump(),
 	)
 
+	apiRoutes := server.Group("/api")
+	{
+		apiRoutes.GET("/videos", func(ctx *gin.Context) {
+			ctx.JSON(200, videoController.FindAll())
+		})
+
+		apiRoutes.POST("/videos", func(ctx *gin.Context) {
+			videoController.Save(ctx)
+			// err := videoController.Save(ctx)
+			// if err != nil {
+			// 	ctx.JSON(
+			// 		http.StatusBadRequest,
+			// 		gin.H{
+			// 			"error": err.Error(),
+			// 		},
+			// 	)
+			// } else {
+			// 	ctx.JSON(http.StatusOK, gin.H{"message": "Video input is valid boy"})
+			// }
+		})
+	}
+
+	viewRoutes := server.Group("/view")
+	{
+		viewRoutes.GET("/videos", videoController.ShowAll)
+	}
+
 	var envs map[string]string
 	envs, err := godotenv.Read(".env")
 
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-
-	server.GET("/videos", func(ctx *gin.Context) {
-		ctx.JSON(200, videoController.FindAll())
-	})
-
-	server.POST("/videos", func(ctx *gin.Context) {
-		err := videoController.Save(ctx)
-		if err != nil {
-			ctx.JSON(
-				http.StatusBadRequest,
-				gin.H{
-					"error": err.Error(),
-				},
-			)
-		} else {
-			ctx.JSON(http.StatusOK, gin.H{"message": "Video input is valid boy"})
-		}
-	})
-
-	server.GET("/test", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"message": "iyeeeooo OLRAIT we on fly",
-		})
-	})
 
 	PATH := envs["PATH"]
 
