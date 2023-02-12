@@ -55,5 +55,5 @@ func (c *controller) ShowAll(ctx *gin.Context) {
 		"videos": videos,
 	}
 
-	ctx.HTML(http.StatusOK, "index.html", data)
+	ctx.HTML(http.StatusOK, "home.html", data)
 }

@@ -6,31 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
+      href="https://cdn.usebootstrap.com/bootstrap/4.4.1/js/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.usebootstrap.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    />
+    <link
+      rel="stylesheet"
       href="https://cdn.usebootstrap.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
     />
     <title>{{.title}}</title>
   </head>
-  <body class="container">
-    {{range .videos}}
-      <div class="col-md-4">
-        <div class="card mb-4 shadow-sm">
-          <div class="card-body">
-              <iframe
-              width="1359"
-              height="774"
-              src="{{.URL}}"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
-        
-            <p class="card-text">
-              <h4>{{.Title}}</h4>
-              <p>{{.Description}}</p>
-            </p>
-          </div>
+  <body >
+    
+    <div class="album py-4 bg-light">
+      <div class="container">
+        <div class="row">
+          {{range .videos}}
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <iframe
+                    width="300"
+                    height="200"
+                    src="{{.URL}}"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                  <p class="card-text">
+                    <h4>{{.Title}}</h4>
+                    <p>{{.Description}}</p>
+                  </p>
+                </div>
+              </div>
+            </div>
+          {{end}}
         </div>
       </div>
-    {{end}}
+    </div>
+   
   </body>
 </html>
