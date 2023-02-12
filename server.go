@@ -1,11 +1,15 @@
 package main
 
 import (
+	"io"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	gindump "github.com/tpkeeper/gin-dump"
 	"gitlab.com/pragmaticreviews/golang-gin-poc/controller"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/middlewares"
 	"gitlab.com/pragmaticreviews/golang-gin-poc/service"
 )
 
@@ -14,8 +18,22 @@ var (
 	videoController controller.VideoController = controller.New(videoService)
 )
 
+func setupLogOutput() {
+	f, _ := os.Create("gin.log")
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+}
+
 func main() {
-	server := gin.Default()
+	setupLogOutput()
+
+	server := gin.New()
+
+	server.Use(
+		gin.Recovery(),
+		middlewares.Logger(),
+		middlewares.BasicAuth(),
+		gindump.Dump(),
+	)
 
 	var envs map[string]string
 	envs, err := godotenv.Read(".env")

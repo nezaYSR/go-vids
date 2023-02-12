@@ -41,4 +41,5 @@ build/
 *.DS_Store
 .DS_Store
 
+gin.log
 .env
